@@ -74,12 +74,13 @@
     
     
 <p>Often text data – especially data from social media websites like Twitter, Facebook or Instagram – can contain emojis which are small images of facial expressions, places, foods, animals, etc. Many text mining processes are unable to process these non-alphanumeric characters, and so, in a preprocessing step, they are dropped from text data. However, removing emojis from text also removes important insight into the meaning of the text data. For example, “I am going to Advanced R class” followed by a smiley face verse a frowning face takes on different meaning.</p>
-<p><code>emoji_to_text</code> allows users to replace emojis with descriptive phrases as an alternative to dropping these characters from text.</p>
+<p>The <code>emoji2text</code> package allows users to replace emojis with descriptive phrases as an alternative to dropping these characters from text.</p>
 <div id="the-function" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-function" class="anchor"></a>The Function</h2>
+<p>The primary function in this package is <code>emoji_to_text</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">   <span class="kw"><a href="../reference/emoji_to_text.html">emoji_to_text</a></span>(character_vector, <span class="dt">accents =</span> <span class="ot">FALSE</span>, <span class="dt">delete =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p>The function <code>emoji_to_text</code> dectects and replaces emojis, as well as accent characters, within text data. Given a vector of text strings, the function returns a vector of text strings where emoji and/or accent unicodes are replaced with a descriptive phrase i.e. “smiling face with heart-eyes”.</p>
+<p>The function dectects and replaces emojis, as well as accent characters, within text data. Given a vector of character strings, the function returns a vector of character strings where each emoji and/or accent unicode is replaced with a corresponding descriptive phrase (e.g., “smiling face with heart-eyes”).</p>
 <p>The function works by iterating through <code>Emojis</code>, an emoji reference data frame. Using regular expressions, if a byte sequence associated with an emoji is found within the text, the byte sequence is replaced with the corresponding english phrase.</p>
 <p>If desired, the option <code>accents = TRUE</code> can be specified to allow for characters with accents to be replaced with a corresponding ASCII character. This process works similariy, by iterating through <code>Accents</code>, an accent reference data frame.</p>
 <p>If <code>delete = TRUE</code>, bytes that are not matched to an emoji or an accent are deleted.</p>
@@ -88,8 +89,8 @@
 <h2 class="hasAnchor">
 <a href="#reference-data-frames" class="anchor"></a>Reference Data Frames</h2>
 <ul>
-<li><p><code>Emojis</code> is a reference data frame containing 3,567 emojis. The raw data was obtained from <a href="https://unicode.org/emoji/charts/full-emoji-list.html">unicode.org</a> and contains single unicode emojis as well as more complicated emojis (i.e. containing skin tones).</p></li>
-<li><p><code>Accents</code> is data frame containing 222 accent characters and symbols from <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters">https://en.wikipedia.org/wiki/List_of_Unicode_characters</a>. If a character is a letter, the user has the option to convert it to its corresponding ASCII character. If a character is a symbol, then it is replaced by an empty string.</p></li>
+<li><p>The <code>Emojis</code> data frame contains 3,567 emojis obtained from <a href="https://unicode.org/emoji/charts/full-emoji-list.html">unicode.org</a> and contains single unicode emojis as well as more complicated emojis (i.e. containing skin tones).</p></li>
+<li><p>The <code>Accents</code> data frame contains 222 accent characters and symbols from <a href="https://en.wikipedia.org/wiki/List_of_Unicode_characters">https://en.wikipedia.org/wiki/List_of_Unicode_characters</a>. If a character is a letter, the user has the option to convert it to its corresponding ASCII character. If a character is a symbol, then it is replaced by an empty string.</p></li>
 </ul>
 </div>
 <div id="example-sentiment-analysis" class="section level2">
@@ -99,15 +100,13 @@
 <p>Suppose we have the following data frame:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(stringr)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emoji2text)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">emoji_text &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">text =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"I’m so hungry 😩 and my stomach hurts!"</span>,</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">                                  <span class="st">"I am super excited to go on vacation with my family 🌸🌊🏄🏽"</span>,</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">                                  <span class="st">"My mom is making me eat my vegetables. 🥦🤢😡😭 I wish I could eat ice cream all day! 🍦"</span>,</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">                                  <span class="st">"I have to go to bed now! 😴 Good night!😘😍💕"</span>,</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10">                                  <span class="st">"I have to go to bed now! 😔 Good night!😠😠😠"</span>),</a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">                         <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">emoji_text &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/data.frame">data.frame</a></span>(<span class="dt">text =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"I’m so hungry 😩 and my stomach hurts!"</span>,</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                                  <span class="st">"I am super excited to go on vacation with my family 🌸🌊🏄🏽"</span>,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                                  <span class="st">"My mom is making me eat my vegetables. 🥦🤢😡😭 I wish I could eat ice cream all day! 🍦"</span>,</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                                  <span class="st">"I have to go to bed now! 😴 Good night!😘😍💕"</span>,</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">                                  <span class="st">"I have to go to bed now! 😔 Good night!😠😠😠"</span>),</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">                         <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p>Note:</p>
 <ul>
 <li><p>The first and second rows contain text that conveys sentiment (i.e. “hurts”, “excited”).</p></li>
@@ -123,7 +122,8 @@
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [4] "I have to go to bed now! &lt;U+0001F634&gt; Good night!&lt;U+0001F618&gt;&lt;U+0001F60D&gt;&lt;U+0001F495&gt;"                                                     </span></a>
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; [5] "I have to go to bed now! &lt;U+0001F614&gt; Good night!&lt;U+0001F620&gt;&lt;U+0001F620&gt;&lt;U+0001F620&gt;"</span></a></code></pre></div>
 <p>Before performing our sentiment analysis, let’s first convert the emojis to english phrases to extract additional meaning.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">emoji_text<span class="op">$</span>clean_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/emoji_to_text.html">emoji_to_text</a></span>(emoji_text<span class="op">$</span>text)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(emoji2text)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">emoji_text<span class="op">$</span>clean_text &lt;-<span class="st"> </span><span class="kw"><a href="../reference/emoji_to_text.html">emoji_to_text</a></span>(emoji_text<span class="op">$</span>text)</a></code></pre></div>
 <p>To perform sentiment analysis, we will be using the package <code>syzhet</code> and the function <code>get_sentiment</code>. For this example, the method used to extract sentiment is the <code>afinn</code> method however the <code>syzhet</code> package includes multiple different methods for getting the sentiment of a phrase.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(syuzhet)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">emoji_text<span class="op">$</span>sentiment &lt;-<span class="st"> </span><span class="kw">get_sentiment</span>(emoji_text<span class="op">$</span>clean_text, <span class="dt">method =</span> <span class="st">"afinn"</span>)</a></code></pre></div>

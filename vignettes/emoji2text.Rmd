@@ -22,9 +22,11 @@ knitr::opts_chunk$set(
 
 Often text data -- especially data from social media websites like Twitter, Facebook or Instagram -- can contain emojis which are small images of facial expressions, places, foods, animals, etc.  Many text mining processes are unable to process these non-alphanumeric characters, and so, in a preprocessing step, they are dropped from text data.  However, removing emojis from text also removes important insight into the meaning of the text data.  For example, "I am going to Advanced R class" followed by a smiley face verse a frowning face takes on different meaning. 
 
-`emoji_to_text` allows users to replace emojis with descriptive phrases as an alternative to dropping these characters from text.
+The `emoji2text` package allows users to replace emojis with descriptive phrases as an alternative to dropping these characters from text.
 
 ## The Function
+
+The primary function in this package is `emoji_to_text`.
 
 ```{r eval=FALSE, echo=TRUE}
    emoji_to_text(character_vector, accents = FALSE, delete = FALSE)
@@ -32,7 +34,7 @@ Often text data -- especially data from social media websites like Twitter, Face
 ```
 
 
-The function `emoji_to_text` dectects and replaces emojis, as well as accent characters, within text data.  Given a vector of text strings, the function returns a vector of text strings where emoji and/or accent unicodes are replaced with a descriptive phrase i.e. "smiling face with heart-eyes".
+The function dectects and replaces emojis, as well as accent characters, within text data.  Given a vector of character strings, the function returns a vector of character strings where each emoji and/or accent unicode is replaced with a corresponding descriptive phrase (e.g., "smiling face with heart-eyes").
 
 The function works by iterating through `Emojis`, an emoji reference data frame.  Using regular expressions, if a byte sequence associated with an emoji is found within the text, the byte sequence is replaced with the corresponding english phrase.
 
@@ -42,9 +44,9 @@ If `delete = TRUE`, bytes that are not matched to an emoji or an accent are dele
 
 ## Reference Data Frames
 
-* `Emojis` is a reference data frame containing 3,567 emojis.  The raw data was obtained from [unicode.org](https://unicode.org/emoji/charts/full-emoji-list.html) and contains single unicode emojis as well as more complicated emojis (i.e. containing skin tones). 
+* The `Emojis` data frame contains 3,567 emojis obtained from [unicode.org](https://unicode.org/emoji/charts/full-emoji-list.html) and contains single unicode emojis as well as more complicated emojis (i.e. containing skin tones). 
 
-* `Accents` is data frame containing 222 accent characters and symbols from [https://en.wikipedia.org/wiki/List_of_Unicode_characters](https://en.wikipedia.org/wiki/List_of_Unicode_characters). If a character is a letter, the user has the option to convert it to its corresponding ASCII character. If a character is a symbol, then it is replaced by an empty string.
+* The `Accents` data frame contains 222 accent characters and symbols from [https://en.wikipedia.org/wiki/List_of_Unicode_characters](https://en.wikipedia.org/wiki/List_of_Unicode_characters). If a character is a letter, the user has the option to convert it to its corresponding ASCII character. If a character is a symbol, then it is replaced by an empty string.
 
 ## Example: Sentiment Analysis
 
@@ -55,8 +57,6 @@ Suppose we have the following data frame:
 ```{r}
 library(stringr)
 library(dplyr)
-library(emoji2text)
-
 
 emoji_text <- data.frame(text = c("I’m so hungry 😩 and my stomach hurts!",
                                   "I am super excited to go on vacation with my family 🌸🌊🏄🏽",
@@ -86,6 +86,7 @@ head(emoji_text$text)
 Before performing our sentiment analysis, let's first convert the emojis to english phrases to extract additional meaning.
 
 ```{r}
+library(emoji2text)
 emoji_text$clean_text <- emoji_to_text(emoji_text$text)
 ```
 
