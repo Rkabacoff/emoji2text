@@ -2,7 +2,14 @@
 
 # emoji2text
 
-The goal of emoji2text is to replacing emojis, as well as accent characters, with descriptive phrases (i.e. "smiling face with heart-eyes") prior to text mining and sentiment analysis.
+The goal of emoji2text is to replacing emojis, as well as accent characters, with descriptive phrases  prior to text mining and sentiment analysis. For example,
+
+
+```"I have to go to bed now! 😔 Good night!😠😠😠"```
+
+   becomes
+
+```"I have to go to bed now! (pensive face) Good night! (angry face)(angry face)(angry face)"```
 
 ## Installation
 
