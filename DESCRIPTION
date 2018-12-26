@@ -1,0 +1,15 @@
+Package: emoji2text
+Type: Package
+Title: Convert accents and emojis to plain text
+Version: 1.0
+Date: 2018-12-26
+Authors@R: c(person("Kelly", "Jamrog", role="aut"), person("Kim", "Pham", role="aut"), person("Jacob", "Kuruvilla", role="aut"),person("Rob", "Kabacoff", role="cre", email="rkabacoff@wesleyan.edu"))
+Description: Replace emojis and accents with corresponding english characters/phrases.
+LazyData: true
+License: GPL-3
+BugReports: https://github.com/rkabacoff/emoji2text/issues
+RoxygenNote: 6.1.1
+Suggests: knitr,
+    rmarkdown
+Imports: dplyr, stringr
+VignetteBuilder: knitr
